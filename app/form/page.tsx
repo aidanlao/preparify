@@ -96,7 +96,7 @@ const ProfileForm = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ city: "california" }),
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {

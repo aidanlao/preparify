@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/backend/auth/authHooks";
 import { CSSTransition } from "react-transition-group";
+import ReactMarkdown from "react-markdown";
 
 type FormDataType = {
   city: string;
@@ -40,7 +41,7 @@ const ProfileForm = () => {
       type: "checkbox",
     },
   ];
-
+  const [isSubmitLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState();
   const [formData, setFormData] = useState<FormDataType>({
     city: "",
@@ -88,6 +89,7 @@ const ProfileForm = () => {
   };
 
   const handleSubmit = async (formData: any) => {
+    setIsLoading(true);
     const url = "http://localhost:4000/data";
 
     try {
@@ -131,49 +133,55 @@ const ProfileForm = () => {
 
   return (
     <>
-      <CSSTransition
-        in={true}
-        key={currentQuestionIndex} // Add a key here to trigger the transition on each question change
-        appear
-        timeout={300}
-        classNames="form-slide"
-        unmountOnExit
-      >
-        <form
-          onSubmit={handleNext}
-          className="max-w-md mx-auto p-6 shadow-md rounded-md"
+      {!isSubmitLoading && (
+        <CSSTransition
+          in={true}
+          key={currentQuestionIndex} // Add a key here to trigger the transition on each question change
+          appear
+          timeout={300}
+          classNames="form-slide"
+          unmountOnExit
         >
-          <div className="mb-4">
-            <label className="block text-gray-700 font-medium mb-2">
-              {currentQuestion.label}
-            </label>
-            {currentQuestion.type === "checkbox" ? (
-              <input
-                type="checkbox"
-                name={currentQuestion.name}
-                checked={(formData as any)[currentQuestion.name] as boolean}
-                onChange={handleChange}
-                className="form-checkbox h-5 w-5 text-blue-600"
-              />
-            ) : (
-              <input
-                type={currentQuestion.type}
-                name={currentQuestion.name}
-                value={(formData as any)[currentQuestion.name] as string}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            )}
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+          <form
+            onSubmit={handleNext}
+            className="max-w-md mx-auto p-6 shadow-md rounded-md"
           >
-            {currentQuestionIndex < questions.length - 1 ? "Next" : "Submit"}
-          </button>
-        </form>
-      </CSSTransition>
-      {result && <p>{JSON.stringify((result as any).story)}</p>}
+            <div className="mb-4">
+              <label className="block text-gray-700 font-medium mb-2">
+                {currentQuestion.label}
+              </label>
+              {currentQuestion.type === "checkbox" ? (
+                <input
+                  type="checkbox"
+                  name={currentQuestion.name}
+                  checked={(formData as any)[currentQuestion.name] as boolean}
+                  onChange={handleChange}
+                  className="form-checkbox h-5 w-5 text-blue-600"
+                />
+              ) : (
+                <input
+                  type={currentQuestion.type}
+                  name={currentQuestion.name}
+                  value={(formData as any)[currentQuestion.name] as string}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              )}
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+            >
+              {currentQuestionIndex < questions.length - 1 ? "Next" : "Submit"}
+            </button>
+          </form>
+        </CSSTransition>
+      )}
+      {result && (
+        <div className="markdown-container">
+          <ReactMarkdown>{(result as any).story}</ReactMarkdown>
+        </div>
+      )}
     </>
   );
 };

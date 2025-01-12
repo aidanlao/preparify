@@ -8,12 +8,12 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAbhokoWmnrOIXyK_WVgKxC6GxrI4XOVqE",
-  authDomain: "ptc-learn-web-dev.firebaseapp.com",
-  projectId: "ptc-learn-web-dev",
-  storageBucket: "ptc-learn-web-dev.firebasestorage.app",
-  messagingSenderId: "647232999895",
-  appId: "1:647232999895:web:23e3805dd9c9105f4dbb92",
+  apiKey: "AIzaSyCD78reMBpBjqxjz-UNPP8QxjA9f9DCwr4",
+  authDomain: "preparify-7567d.firebaseapp.com",
+  projectId: "preparify-7567d",
+  storageBucket: "preparify-7567d.firebasestorage.app",
+  messagingSenderId: "1022640286178",
+  appId: "1:1022640286178:web:350a939309e06e59ecf1bb",
 };
 
 // Initialize Firebase

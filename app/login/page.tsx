@@ -20,7 +20,7 @@ export default function Login() {
     login({
       email: data.email,
       password: data.password,
-      redirectTo: "learn",
+      redirectTo: "/form",
     });
   }
 

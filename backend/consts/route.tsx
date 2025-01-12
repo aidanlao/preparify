@@ -1,1 +1,1 @@
-export type TRoute = "login" | "register" | "learn";
+export type TRoute = string;

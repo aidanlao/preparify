@@ -9,12 +9,10 @@ import { setDoc, doc, getDoc } from "firebase/firestore";
 
 import { db, auth } from "../firebase/firebase";
 import { TRoute } from "../consts/route";
-import { TUser } from "../types/authTypes";
-
 export function useAuth() {
   const [authUser, authLoading, error] = useAuthState(auth);
   const [isLoading, setLoading] = useState(true);
-  const [user, setUser] = useState<TUser | undefined>(undefined);
+  const [user, setUser] = useState<any | undefined>(undefined);
   const router = useRouter();
 
   useEffect(() => {
@@ -26,7 +24,7 @@ export function useAuth() {
 
         console.log("get uer");
         console.log(docSnap.data());
-        setUser(docSnap.data() as TUser);
+        setUser(docSnap.data() as any);
         setLoading(false);
       }
     }
@@ -49,7 +47,7 @@ export function useAuth() {
         const ref = doc(db, "users", authUser.uid);
         const docSnap = await getDoc(ref);
 
-        setUser(docSnap.data() as TUser);
+        setUser(docSnap.data() as any);
         setLoading(false);
       }
     }
@@ -132,7 +130,7 @@ export function useRegister() {
         const res = await createUserWithEmailAndPassword(auth, email, password);
 
         console.log(res);
-        const userToAdd: TUser = {
+        const userToAdd: any = {
           id: res.user.uid,
           email: email,
           name: name,
